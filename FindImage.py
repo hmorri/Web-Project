@@ -23,3 +23,4 @@ searchbar.send_keys(Keys.ENTER)
 #    if spot > 0:
 #      print(pic.get_attribute('src'))
 #       driver.get(pic.get_attribute('src'))
+#i hate this
