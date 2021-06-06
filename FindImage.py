@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 driver = webdriver.Chrome()
 driver.get("http://images.google.com")
 
-searchbar = driver.find_elements_by_tag_name('input')
+searchbar = driver.find_element_by_xpath('//*[@id="sbtc"]/div/div[2]/input')
 
 searchbar.send_keys('kittens')
 searchbar.send_keys(Keys.ENTER)
@@ -23,3 +23,5 @@ searchbar.send_keys(Keys.ENTER)
 #    if spot > 0:
 #      print(pic.get_attribute('src'))
 #       driver.get(pic.get_attribute('src'))
+#//*[@id="sbtc"]/div/div[2]/input
+driver.close()
