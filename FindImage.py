@@ -18,12 +18,14 @@ WebDriverWait(driver, 10).until(EC.url_contains("https://free-images.com/search/
 #Finds and prints the address of each search result on the first page
 results = driver.current_url
 
-pics = results.find_elements_by_tag_name('img')
+driver.get(results)
 
 #spot = 0
-for pic in pics:
-    addy = pic.get_attribute('src')
-    print(addy)
+for pic in driver.find_elements_by_xpath('.//span[contains(text(), "jpg")]/a'):
+#if ".jpg" in pic:
+   print(pic)
+#    addy = pic.find_elements_by_tag_name('src')
+#    print(addy)
     #if ".jpg" in addy:
     #   driver.get(pic.get_attribute('src'))
      #  break
