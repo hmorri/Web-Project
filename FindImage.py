@@ -1,38 +1,24 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-#Opens Chrome to free-images.com
-driver = webdriver.Chrome()
-driver.get("https://free-images.com")
+import os.path
+import requests
+import shutil
 
-searchbar = driver.find_element_by_xpath('//*[@id="sbar"]/form/table/tbody/tr/td[1]/input')
+directory = "Images"
+#Checks for and creates directory for images
+if not os.path.isdir(directory):
+   os.mkdir(directory)
+   
+   
+#Downloads and saves an image
 
-#Sends search query to searchbar
-searchbar.send_keys('kittens')
-searchbar.send_keys(Keys.ENTER)
+image_location = "https://live.staticflickr.com/5122/5264886972_3234d62748.jpg"
+file = "test.jpg"
 
-WebDriverWait(driver, 10).until(EC.url_contains("https://free-images.com/search/?q"))
+#Opens image
+image = requests.get(image_location, stream = True)
 
-#Finds and prints the address of each search result on the first page
-results = driver.current_url
-
-driver.get(results)
-
-#spot = 0
-for pic in driver.find_elements_by_xpath('.//span[contains(text(), "jpg")]/a'):
-#if ".jpg" in pic:
-   print(pic)
-#    addy = pic.find_elements_by_tag_name('src')
-#    print(addy)
-    #if ".jpg" in addy:
-    #   driver.get(pic.get_attribute('src'))
-     #  break
-     #Skips the webpage's design elements and takes the first definition picture
-#    spot = spot + 1
-#    if spot > 0:
-#      print(pic.get_attribute('src'))
-#       driver.get(pic.get_attribute('src'))
-#//*[@id="sbtc"]/div/div[2]/input
-driver.close()
+#Checks for retrieval then saves the image
+if image.status_code == 200:
+   image.raw.decode_content = True
+   with open(file, 'wb') as pic:
+      #saves in the local directory, be sure to move this to the images folder
+      shutil.copyfileobj(image.raw, pic)
